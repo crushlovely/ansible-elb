@@ -1,0 +1,11 @@
+{
+  "LoadBalancerName": "tippetrise-staging",
+  "PolicyName": "EnableProxyProtocol",
+  "PolicyTypeName": "ProxyProtocolPolicyType",
+  "PolicyAttributes": [
+    {
+      "AttributeName": "ProxyProtocol",
+      "AttributeValue": "True"
+    }
+  ]
+}

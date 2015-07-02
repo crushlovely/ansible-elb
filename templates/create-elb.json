@@ -1,0 +1,28 @@
+{
+    "LoadBalancerName": "tippetrise-staging",
+    "Listeners": [
+        {
+            "Protocol": "tcp",
+            "LoadBalancerPort": 80,
+            "InstanceProtocol": "tcp",
+            "InstancePort": 80,
+            "SSLCertificateId": ""
+        },
+        {
+            "Protocol": "tcp",
+            "LoadBalancerPort": 443,
+            "InstanceProtocol": "tcp",
+            "InstancePort": 443,
+            "SSLCertificateId": ""
+        }
+    ],
+    "Subnets": [
+        "subnet-d44326ff",
+        "subnet-f3acf284",
+        "subnet-38848802",
+        "subnet-ea3e4db3"
+    ],
+    "SecurityGroups": [
+        ""
+    ]
+}
