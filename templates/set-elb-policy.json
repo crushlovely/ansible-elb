@@ -1,7 +1,0 @@
-{
-    "LoadBalancerName": "tippetrise-staging",
-    "InstancePort": 80,
-    "PolicyNames": [
-        "EnableProxyProtocol"
-    ]
-}

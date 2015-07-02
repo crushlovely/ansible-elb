@@ -1,11 +1,11 @@
-# Ansible Role: Creates S3 Buckets
+# Ansible Role: Creates ELB Buckets
 
-Creates one or more s3 buckets and configgures them with CORS and Makes them public.  This role also installs the AWSCLI to properly configure the buckets
+Creates one or more Elastic load balancers and configures them with a proxy protocol policy.  This role also installs the AWSCLI to properly configure the buckets
 
 ## Installation
 
 ``` bash
-$ ansible-galaxy install https://github.com/crushlovely/ansible-s3.git
+$ ansible-galaxy install https://github.com/crushlovely/ansible-elb.git
 ```
 ## Variables
 
@@ -14,10 +14,15 @@ You will want to fill all these in before running the role.
 ``` yaml
 app_name: test
 server_env: qa
-access_key: ""
-secret_key: ""
-bucket_name:
-  - ""
+aws_access_key: ""
+aws_secret_key: ""
+aws_elb:
+  - port: 80
+aws_vpc_subnets:
+  - "\"subnet-xxxxxxx\""
+  - "\"subnet-xxxxxxx\""
+  - "\"subnet-xxxxxxx\""
+  - "\"subnet-xxxxxxx\""
 ```
 You can also add a vars folder to your project folder and have your variables served by adding them to a file and calling it in your playbook.
 
@@ -25,6 +30,7 @@ You can also add a vars folder to your project folder and have your variables se
 - hosts: localhost
 ...
   vars_files:
+    - vars/aws_vars.yml
     - vars/default_vars.yml
 ...
 ```
@@ -37,7 +43,7 @@ Once this role is installed on your system, include it in the roles list of your
   connection: local
   gather_facts: True
   roles:
-    - ansible-s3
+    - ansible-elb
 ```
 
 ## Dependencies

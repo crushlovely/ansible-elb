@@ -1,28 +1,23 @@
 {
-    "LoadBalancerName": "tippetrise-staging",
+    "LoadBalancerName": "{{ app_name }}-{{ server_env }}",
     "Listeners": [
         {
             "Protocol": "tcp",
             "LoadBalancerPort": 80,
             "InstanceProtocol": "tcp",
-            "InstancePort": 80,
-            "SSLCertificateId": ""
+            "InstancePort": 80
         },
         {
             "Protocol": "tcp",
             "LoadBalancerPort": 443,
             "InstanceProtocol": "tcp",
-            "InstancePort": 443,
-            "SSLCertificateId": ""
+            "InstancePort": 443
         }
     ],
     "Subnets": [
-        "subnet-d44326ff",
-        "subnet-f3acf284",
-        "subnet-38848802",
-        "subnet-ea3e4db3"
+        {{ vpc_subnets|join ',' }}
     ],
     "SecurityGroups": [
-        ""
+        "{{ elb_security_group }}"
     ]
 }

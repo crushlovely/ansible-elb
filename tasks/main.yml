@@ -8,19 +8,32 @@
 - name: Create template
   template: src=aws_config.j2 dest=~/.aws/config owner={{ ansible_env.USER }} backup=yes
 
-- name: create load balancer config and place in tmp directory
-  template: src=create-elb.json.j2 dest=/tmp/{{ item.bucket_name }}.json
+- name: Get security group from AWS CLI
+  shell: aws ec2 describe-security-groups --group-names {{ app_name }}-{{ server_env }} --profile {{ app_name }} | grep GroupId | echo `awk '{print $2}'`
+  register: security_group_id
+
+- name: Create ELB config and place in tmp directory
+  template: src=create-elb.json.j2 dest=/tmp/{{ app_name }}-{{ server_env }}-elb.json
+
+- name: Create ELB
+  command: "aws elb create-load-balancer --cli-input-json file:///tmp/{{ app_name }}-{{ server_env }}-elb.json --profile {{ app_name }}"
+
+- name: Create ELB Policy json file
+  template: src=create-elb-policy.json.j2 dest=/tmp/{{ item.port }}.json
   with_items:
-    - "{{ asset_vars }}"
+    - "{{ aws_elb }}"
 
-- name: create Cloudfront distributions
-  command: "aws cloudfront create-distribution --distribution-config=file:///tmp/{{ item.bucket_name }}.json --profile {{ app_name }}"
+- name: Create ELB Policy
+  command: "aws elb create-load-balancer-policy --cli-input-json file:///tmp/{{ item.port }}.json --profile {{ app_name }}"
   with_items:
-    - "{{ asset_vars }}"
+    - "{{ aws_elb }}"
 
-- name: List Cloudfront distrinutions
-  shell: "aws cloudfront list-distributions --profile {{ app_name }} | grep DomainName"
-  register: cloudfront_results
+- name: Create ELB Policy json file per port
+  template: src=set-elb-policy.json.j2 dest=/tmp/{{ item.port }}.json
+  with_items:
+    - "{{ aws_elb }}"
 
-- debug: var=cloudfront_results
-
+- name: Set ELB Policy per port
+  command: "aws elb set-load-balancer-policies-for-backend-server --cli-input-json file:///tmp/{{ item.port }}.json --profile {{ app_name }}"
+  with_items:
+    - "{{ aws_elb }}"
