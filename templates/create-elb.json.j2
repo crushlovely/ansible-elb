@@ -15,9 +15,9 @@
         }
     ],
     "Subnets": [
-        {{ vpc_subnets|join ',' }}
+        {{ aws_vpc_subnets|join(',') }}
     ],
     "SecurityGroups": [
-        "{{ elb_security_group }}"
+        {{ security_group_id.stdout }}
     ]
 }
