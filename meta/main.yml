@@ -5,6 +5,11 @@ galaxy_info:
   description: Provision and Configure AWS EC2 ELB resources
   license: MIT
   min_ansible_version: 1.7
+  platforms:
+  - name: OSX
+    versions:
+    - El Capitan
+    - Yosemite
   categories:
     - cloud
 dependencies: []
