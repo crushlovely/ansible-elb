@@ -2,10 +2,9 @@
 galaxy_info:
   author: Pablo Castillo
   company: Crush & Lovely
-  description: Provision and Configure AWS cloudfront distributions
+  description: Provision and Configure AWS EC2 ELB resources
   license: MIT
-  min_ansible_version: 1.6
+  min_ansible_version: 1.7
   categories:
     - cloud
 dependencies: []
-version: 1.0.0-beta

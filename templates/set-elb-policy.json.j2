@@ -1,0 +1,7 @@
+{
+    "LoadBalancerName": "{{ app_name }}-{{ server_env }}",
+    "InstancePort": "{{ item.port }}",
+    "PolicyNames": [
+        "EnableProxyProtocol"
+    ]
+}

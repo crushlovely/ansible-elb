@@ -1,10 +1,9 @@
 ---
 app_name: test
 server_env: qa
-access_key: ""
-secret_key: ""
-asset_vars:
-  - bucket_name: "{{ app_name }}-{{ server_env }}"
-    caller_reference: 1
-  - bucket_name: "{{ app_name }}-assets-{{ server_env }}"
-    caller_reference: 2
+aws_access_key: ""
+aws_secret_key: ""
+aws_vpc_subnets:
+  - ""
+aws_elb:
+  - port: 80
